@@ -44,10 +44,11 @@ Deaths <- read_csv("Data/annual-number-of-deaths-by-cause.csv")
 ---
 
 .content-box-soft[ 
-Deaths rates from HIV/AIDS across the world
+Deaths rates from HIV/AIDS in the world
 ]
 
 ```{r HIV_AIDS,  echo = FALSE, message = FALSE, warning = FALSE }
+
 HIV_AIDS <- Deaths %>% 
   select( Entity, Code, Year, `Deaths - HIV/AIDS - Sex: Both - Age: All Ages (Number)`) %>%
   rename(Deaths_HIV_AIDS = `Deaths - HIV/AIDS - Sex: Both - Age: All Ages (Number)` )%>%
@@ -57,7 +58,64 @@ HIV_AIDS <- Deaths %>%
 ```
 
 
+```{r World_trend, echo = FALSE, message = FALSE, warning = FALSE }
+HIV_AIDS %>% filter (Entity == "World")%>%
+  mutate(round_Deaths_HIV_AIDS = Deaths_HIV_AIDS/1000)%>%
+  ggplot(aes(x= Year, 
+             y = round_Deaths_HIV_AIDS))+
+  geom_line(linetype = "dashed", color = "blue", size =1 ) +
+  geom_point(color = "blue", size = 3)+
+  labs(y = "Number of Deaths from HIV/AIDS per 100,000 people",
+       x = "Year")+
+  ggtitle("Deaths rates from HIV/AIDS")+
+  theme_minimal()
 
+```
+
+---
+class: left, top
+
+
+.content-box-soft[ 
+Top 5 countries with the average highest death rates from HIV / AIDS
+]
+
+```{r average_HIV,   echo = FALSE, message = FALSE, warning = FALSE}
+#disable scientific notation
+options(scipen=999)
+
+#calculate average death rates per nation
+HIV_AIDS_nation <- HIV_AIDS %>% 
+  filter(!Entity %in% c("Asia", "African Region", "Central Asia", "Central Europe", "Central Europe, Eastern Europe, and Central Asia",
+                        "Central Latin America", "Central sub-Saharan Africa", "Commonwealth High Income", "Commonwealth Low Income", 
+                        "Commonwealth Middle Income" , "East Asia","East Asia & Pacific - World Bank region", "Eastern Europe", 
+                        "Eastern Mediterranean Region", "Eastern sub-Saharan Africa" ,"Europe & Central Asia - World Bank region", 
+                        "European Region", "European Union" , "G20", "Low SDI", "High SDI", "Low-middle SDI",  "High-income", 
+                        "High-income Asia Pacific", "High-income North America" , "High-middle SDI","Latin America & Caribbean - World Bank region" ,
+                        "Middle SDI","Commonwealth", "African Union", "Southern sub-Saharan Africa", "Region of the Americas",
+                        "South-East Asia Region" , "Southeast Asia","Southeast Asia, East Asia, and Oceania", "South Asia - World Bank region",
+                        "Sub-Saharan Africa - World Bank region" , "Western Europe", "Western Pacific Region" , "Western sub-Saharan Africa", 
+                        "World" , "World Bank High Income", "World Bank Low Income","World Bank Lower Middle Income" ,
+                        "World Bank Upper Middle Income"))
+
+mean_HIV_AIDS <- HIV_AIDS_nation %>% 
+  group_by(Entity)  %>% 
+  summarise(`Average Death Rates from HIV/AIDS` =  mean(Deaths_HIV_AIDS, na.rm = TRUE)) %>%
+  arrange(-`Average Death Rates from HIV/AIDS`)
+
+mean_HIV_AIDS <- mean_HIV_AIDS %>% 
+  mutate_if(is.numeric, round, digits=0)
+
+mean_HIV_AIDS <- head(mean_HIV_AIDS,5)
+
+knitr::kable(mean_HIV_AIDS,
+             col.names = gsub("[.]", " ",
+                              names(mean_HIV_AIDS)))
+
+
+```
+
+---
 
 
 
