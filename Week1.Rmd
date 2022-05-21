@@ -117,6 +117,28 @@ knitr::kable(mean_HIV_AIDS,
 
 ---
 
+.content-box-soft[ 
+Antiretroviral therapy (ART) introduced in 1980s
+]
+
+```{r ART, echo = FALSE, message = FALSE, warning = FALSE}
+ART <- read_csv("Data/hivaids-deaths-and-averted-due-to-art.csv")
+
+ART  %>% filter (Entity %in% c( "Africa", "South Africa", "Kenya","Tanzania", "India"  ))%>%
+  mutate(Deaths_averted = `Deaths averted due to ART - estimate`/1000)  %>%
+   ggplot(aes(x= Year, 
+             y = Deaths_averted, 
+             colour = Entity))+
+  geom_line(linetype = "dashed", size =1 ) +
+  geom_point( size = 2)+
+  labs(y = "Number of HIV/AIDS deaths averted per 100,000 people",
+       x = "Year")+
+  ggtitle("Number of HIV/AIDS deaths averted due to ART")+
+  theme_minimal()
+
+
+
+```
 
 
 ---
