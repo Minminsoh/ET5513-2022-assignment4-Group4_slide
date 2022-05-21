@@ -120,6 +120,8 @@ class: left, top
 
 # Top 5 Countries with **highest** Malaria death rate 
 
+
+.center2[
 ```{r, echo = FALSE, preserve = TRUE}
 
 malaria_mean <- malaria_data %>%
@@ -137,17 +139,23 @@ malaria_mean <- malaria_data %>%
   filter(Country != "South Asia (WB)") %>%
   filter(Country != "G20") 
 
-head(malaria_mean, 5)
+knitr::kable(head(malaria_mean, 5))
 
 #knitr::kable(caption = "Top 5 Countries with highest Malaria death rate")
 
 
 ```
+]
 
 
+
+---
+class: left, top
+
+# Trending of the top 5 Countries 
 
 .pull-left1[
-```{r, echo = FALSE, preserve = TRUE, fig.cap ="Malaria world trend"}
+```{r, echo = FALSE, preserve = TRUE, fig.cap ="Malaria world trend", fig.pos= "H"}
 
 malaria_top5 <- malaria_data %>%
   filter(Country %in% c("Nigeria", "India", "Uganda", "Burkina Faso", "Cote d'Ivoire")) 
@@ -168,11 +176,20 @@ ggplot(malaria_top5, aes( x = Year, y = Malaria, color = Country)) +
 ---
 class: left, top
 
-# Reasons for high death rate of malaria in Nigeria, India, Uganda, Burkina Faso, Cote d'Ivoire		 
+# Reasons for high death rate of malaria in these countries
+
+-hot and humid weather
+
+.content-box-soft[ 
+* Temperature higher or equal to 21℃ is the most suitable condition for one of the fatal malaria parasite to grow into vector. 
+]
 
 
+-lack of comprehensive reporting system
 
-
+.content-box-soft[ 
+* In India,  hospital and clinic do not report malaria cases to corresponding government organisation
+]
 
 
 ---
@@ -180,89 +197,16 @@ class: left, top
 
 # Preventive measures for Malaria
 
+-Maldives: must report confirmed malaria cases to government
 
+-Sri Lanka: set up mobile malaria clinics to detect cases 
 
+-RTS.S subunit vaccine (still in testing stage)
 
+-use of insecticide
 
+-insecticide-treated net
 
-
-
----
-class:  left, top
-
-# Adding figure
-
-.pull-left1[
-```{r  penguins , eval = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins, 
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
-]
-
-
-.pull-right1[
-```{r  penguins2 , eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins,
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
-]
-
-
-
----
-class:  left, top
-# Adding figure --> another way
-
-.right-column[
-```{r  penguins3 , eval = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins, 
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
-]
-
-
-.left-column[
-```{r  penguins4 , eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins,
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
-]
 
 
 
