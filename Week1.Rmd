@@ -1,8 +1,8 @@
 ---
 title: "Xaringan Template"
-subtitle: "An example"
-author: "Patricia Menéndez"
-institute: "Department of Econometrics and Business Statistics"
+subtitle: "Cause of deaths"
+author: "Sanna Meer"
+institute: "Master of Business Analytics"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -24,289 +24,20 @@ library(datasets)
 
 class: center, middle
 ![](https://media.giphy.com/media/OkJat1YNdoD3W/giphy.gif)
-
-
 ---
-class: center, middle
-# Hello!
 
-Dr Patricia Menéndez
-```{r out.width = '35%', echo = FALSE, fig.align="center"}
-knitr::include_graphics("figs/patricia.jpeg")
-```
-
-Lecturer Department of Econometric and Business Statistics.
-
-
-
-
-
----
-# Of course Yourselves too!
-
-![](figs/baim-hanif-pYWuOMhtc6k-unsplash.jpg)
-
-.tiny[<span>Photo by <a href="https://unsplash.com/@baim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Baim Hanif</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>]
-
-
-
----
-class: left, top
-# This is an example of using boxes around txt
-.content-box-soft[ 
-- Understand the aims and structure of the unit
+.content-box-duke-green[
+##  Nutritional Deficiency Deaths
 ]
-
-.content-box-duke-green[ 
-* Explain the need for reproducible and collaborative practices
-]
-.content-box-soft[ 
-* Introduce the main tools that we are going to use during the lectures/tutorials
-]
-
-
-
----
-class: left, top
-
-# Adding color to the text
-
-- .green[ This is an example in green]
-- .red[ This is an example in green]
-
-- .bold[This is an example in bold]
-
-- you can also use markdown bold syntax **bold**
-
-
-
----
-class: center, top
-
-# Unit Structure
-
-
-
-.pull-left[
-* Start with individual projects 
-.tiny[<span>Photo by <a href="https://unsplash.com/@firmbee?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">William Iven</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>]
-]
-.pull-left[
-```{r out.width = '50%', echo = FALSE}
-knitr::include_graphics("figs/william-iven-gcsNOsPEXfs-unsplash.jpg")
-```
-
-]
-
-.pull-left[
- * Will continue with group projects
- 
- .tiny[<span>Photo by <a href="https://unsplash.com/@homajob?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Scott Graham</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>]
-
-]
-.pull-left[
-```{r out.width = '50%', echo = FALSE}
-knitr::include_graphics("figs/helloquence-5fNmWej4tAA-unsplash.jpg")
-```
-
-
-]
-
-.pull-left[
- * Finally, as a class, we will produce a join project
- 
- .tiny[<span>Photo by <a href="https://unsplash.com/@baim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Baim Hanif</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>]
-]
-.pull-left[
-```{r out.width = '50%', echo = FALSE}
-knitr::include_graphics("figs/baim-hanif-pYWuOMhtc6k-unsplash.jpg")
-```
-
-]
-
-
-
-
-
-
-
----
-class: left, middle
-# Different headings
-.green[.bold[Example]] 
-### Smaller heading
-* My section
-
-### Another samller heading
-.content-box-duke-green[ 
-
-  - You will get instructions with the tasks that need to be completed during the tutorial.
-  - Fan and Naveen will be there to guide and help you through the activities.
-  - Tutorials also provide a good opportunity for you to discuss and work with your peers.
-]
-
-
----
-
-class: left, middle
-# Using also LaTex
-
-.content-box-soft[ 
-- .green[.bold[Patricia]] $\leftarrow$ hello hello ]
-
-- $\sum_{i = 1}^{\infty} x_i$
-
-**Bolding using markdown**
-
----
-class: centre, middle
-# Questions?
-
-
-
----
-class:  center, top
-
-# Let's get started with gifs
-
-
-![](https://media.giphy.com/media/3ohc1fpw7snh6omAaQ/giphy.gif)
-
-
-
-
-
----
-class: left, top
-
-# Adding code
-
-```{r }
-c(1:10)
-
-```
-
-
----
-class: left, top
-# Adding code
-
-```{r }
-penguins %>%
-  dplyr::select(body_mass_g,
-                ends_with("_mm")
-                ) %>%
-  glimpse()
-```
-
-
-
-
----
-class:  left, top
-# Adding figure
-
-.pull-left1[
-```{r  penguins , eval = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins, 
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
-]
-
-
-.pull-right1[
-```{r  penguins2 , eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins,
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
-]
-
-
-
----
-class:  left, top
-# Adding figure --> another way
-
-.right-column[
-```{r  penguins3 , eval = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins, 
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
-]
-
-
-.left-column[
-```{r  penguins4 , eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins,
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
-]
-
-
----
-# Tables
-
-
-```{r}
-iris2 <- head(iris)
-knitr::kable(iris2,
-             col.names = gsub("[.]", " ",
-                              names(iris)))
-
-```
-
----
-
-
-# Research questions :
-
-.content-box-duke-green[ 
-
-  In this section, I wanted to understand the trend of Nutritional Deficiency deaths worldwide from 1990. The World Health Organisation estimates that more than two billion people suffer from Nutritional Deficiency globally.   
-  So with this data set, I am trying to answer three of the following research questions:
+In this section, I wanted to understand the trend of Nutritional Deficiency deaths worldwide from 1990. The World Health Organisation estimates that more than two billion people suffer from Nutritional Deficiency globally.   
+  So with this data set, I am trying to answer **three** of the following research questions:
   
--1. How is the trend of  Nutritional Deficiency deaths worldwide from 1990?  
+* How is the trend of  Nutritional Deficiency deaths worldwide from 1990?  
 
--2.  countries in the world with the highest deaths caused by Nutritional Deficiencies.  
+* Countries in the world with the highest deaths caused by Nutritional Deficiencies.  
 
--3. What are the preventive measures those countries can take to reduce these deaths? 
-]
+* What are the preventive measures those countries can take to reduce these deaths? 
+
 
 ---
 
@@ -341,11 +72,12 @@ data1 <- data %>%
   select(Country, Year, Nutritional_deficiency_deaths) %>%
   group_by(Country, Year) %>%
   summarise(Total_deaths = sum(Nutritional_deficiency_deaths, na.rm= TRUE))
-
 ```
 
 
+
 # Worldwide trend
+
 
 ```{r, echo = FALSE, message = FALSE}
 #getting the worldwide death count
@@ -357,9 +89,13 @@ ggplot(data = World_data, aes(Year, Total_deaths, colour="World")) +
   ylab("Total_deaths") + xlab("Year") + ggtitle("The trend of Nutritional Deficiency deaths worldwide from 1990")
 ```
 
+---
 
-```{r, echo = FALSE, message = FALSE}
-#top 5 countries with highest death rates
+#Top 5 countries with highest average  death rates
+
+
+```{r top5, echo = FALSE, message = FALSE}
+#top 5 countries with highest average  death rates
 
 Tidy_data <- Nutr_def_data %>%
          group_by(Country) %>%
@@ -372,6 +108,17 @@ Highest_countries <- Top5[-c(3:8), ]
 
 ```
 
+
+```{r top5countries, echo = FALSE, message = FALSE}
+Highest_countries <- Highest_countries %>% 
+  mutate_if(is.numeric, round, digits=0)
+
+knitr::kable(
+Highest_countries[1:10,], booktabs = TRUE,
+             caption = 'Total deaths by Nutritional Deficiencies')
+```
+
+
 ---
 
 class: center, middle
@@ -381,18 +128,48 @@ deaths_top5 <- data1 %>%
   filter(Country %in% c( "India", "Ethiopia", "Bangladesh", "North Korea", "Indonesia"))
 ```
 
+
+
 # Top 5 countries
+
 
 ```{r, echo = FALSE}
 plot <-  deaths_top5 %>%
   group_by(Country) %>%
   ggplot() +
   geom_line(aes(x = Year, y = Nutritional_deficiency_deaths, color = Country)) +
-  ylab("Number of death") + xlab("Year") + ggtitle("Top 5 countries with highest death rates due to Nutritional Deficiencies")
+  ylab("Number of death") + xlab("Year") + ggtitle("Top 5 countries with highest average death rates due to Nutritional Deficiencies")
+
 plot
 ```
 
 ---
+
+class: center, middle
+
+
+# Reasons and Preventive Measures
+---
+
+## .red[.bold[Reasons]]
+
+* Several contributory factors such as .red[.bold[Poverty, lack of purchasing power, household food insecurity, and limited general knowledge]] about appropriate nutritional practices increase the risk of undernutrition in developing countries. 
+* .red[.bold[The synergistic interaction between inadequate dietary intake and disease burden]] leads to a vicious cycle that accounts for much of the high morbidity and mortality in these countries.
+* Three groups of underlying factors contribute to inadequate dietary intake and infectious disease: .red[.bold[inadequate maternal and child care, household food insecurity, and poor health services]] in an unhealthy environment.
+
+---
+
+## .green[.bold[Preventive Measures]]
+
+
+Primary prevention measures taken to ensure more appropriate nutrient intakes in the population often include :
+* .green[.bold[Education programs]] to encourage healthier and more nutritious food choices
+* .green[.bold[Food-based approaches]] that increase the availability or affordability of nutrient-rich foods; and,
+* .green[.bold[national policies]] to fortify commonly-eaten foods
+
+
+---
+
 
 ```{r endslide, child="EndSlide/endslide.Rmd"}
 ```  
