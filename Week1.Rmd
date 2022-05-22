@@ -23,49 +23,6 @@ library(ggplot2)
 ```
 
 
-
----
-class: center, middle
-# Hello!
-
----
-class: left, top
-# This is an example of using boxes around txt
-.content-box-soft[ 
-- Understand the aims and structure of the unit
-]
-
-.content-box-duke-green[ 
-* Explain the need for reproducible and collaborative practices
-]
-.content-box-soft[ 
-* Introduce the main tools that we are going to use during the lectures/tutorials
-]
-
----
-class: left, top
-
-# Adding color to the text
-
-- .green[ This is an example in green]
-- .red[ This is an example in green]
-
-- .bold[This is an example in bold]
-
-- you can also use markdown bold syntax **bold**
-
----
-
-class: left, middle
-# Using also LaTex
-
-.content-box-soft[ 
-- .green[.bold[Patricia]] $\leftarrow$ hello hello ]
-
-- $\sum_{i = 1}^{\infty} x_i$
-
-**Bolding using markdown**
-
 ---
 class: left, top
 
@@ -206,8 +163,6 @@ class: left, top
 -use of insecticide
 
 -insecticide-treated net
-
-
 
 
 
