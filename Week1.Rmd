@@ -185,10 +185,10 @@ class: left, top
 ]
 
 
--lack of comprehensive reporting system
+-lack of comprehensive report system
 
 .content-box-soft[ 
-* In India,  hospital and clinic do not report malaria cases to corresponding government organisation
+* In India, hospital and clinic do not report malaria cases to corresponding government organisation
 ]
 
 
