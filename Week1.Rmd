@@ -1,7 +1,7 @@
 ---
-title: "Xaringan Template"
-subtitle: "An example"
-author: "Patricia Menéndez"
+title: "Causes of Death "
+subtitle: "Presentation"
+author: "Min Min Soh"
 institute: "Department of Econometrics and Business Statistics"
 output:
   xaringan::moon_reader:
@@ -17,333 +17,156 @@ options(htmltools.dir.version = FALSE)
 
 ```{r , echo = FALSE, message = FALSE, warning = FALSE}
 library(tidyverse)
-library(palmerpenguins)
 library(datasets)
+library(kableExtra)
 ```
 
 
 class: center, middle
-![](https://media.giphy.com/media/OkJat1YNdoD3W/giphy.gif)
 
+# Introduction 
 
----
-class: center, middle
-# Hello!
+Research Questions 
 
-Dr Patricia Menéndez
-```{r out.width = '35%', echo = FALSE, fig.align="center"}
-knitr::include_graphics("figs/patricia.jpeg")
+```{r read_csv, echo = FALSE, message = FALSE, warning = FALSE}
+Deaths <- read_csv("Data/annual-number-of-deaths-by-cause.csv")
 ```
 
-Lecturer Department of Econometric and Business Statistics.
+---
 
+# Deaths - HIV/AIDS
 
-
+- .blue[How have death from **HIV / AIDS** changed over time in the world ? ]
+- .blue[What is the top 5 countries with the highest death rates from **HIV / AIDS** and the death trends from those countries? ]
+- .blue[What are the preventive measures for **HIV / AIDS** ? ]
 
 
 ---
-# Of course Yourselves too!
-
-![](figs/baim-hanif-pYWuOMhtc6k-unsplash.jpg)
-
-.tiny[<span>Photo by <a href="https://unsplash.com/@baim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Baim Hanif</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>]
-
-
-
----
-class: left, top
-# This is an example of using boxes around txt
-.content-box-soft[ 
-- Understand the aims and structure of the unit
-]
-
-.content-box-duke-green[ 
-* Explain the need for reproducible and collaborative practices
-]
-.content-box-soft[ 
-* Introduce the main tools that we are going to use during the lectures/tutorials
-]
-
-
-
----
-class: left, top
-
-# Adding color to the text
-
-- .green[ This is an example in green]
-- .red[ This is an example in green]
-
-- .bold[This is an example in bold]
-
-- you can also use markdown bold syntax **bold**
-
-
-
----
-class: center, top
-
-# Unit Structure
-
-
-
-.pull-left[
-* Start with individual projects 
-.tiny[<span>Photo by <a href="https://unsplash.com/@firmbee?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">William Iven</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>]
-]
-.pull-left[
-```{r out.width = '50%', echo = FALSE}
-knitr::include_graphics("figs/william-iven-gcsNOsPEXfs-unsplash.jpg")
-```
-
-]
-
-.pull-left[
- * Will continue with group projects
- 
- .tiny[<span>Photo by <a href="https://unsplash.com/@homajob?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Scott Graham</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>]
-
-]
-.pull-left[
-```{r out.width = '50%', echo = FALSE}
-knitr::include_graphics("figs/helloquence-5fNmWej4tAA-unsplash.jpg")
-```
-
-
-]
-
-.pull-left[
- * Finally, as a class, we will produce a join project
- 
- .tiny[<span>Photo by <a href="https://unsplash.com/@baim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Baim Hanif</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>]
-]
-.pull-left[
-```{r out.width = '50%', echo = FALSE}
-knitr::include_graphics("figs/baim-hanif-pYWuOMhtc6k-unsplash.jpg")
-```
-
-]
-
-
-
-
-
-
-
----
-class: left, middle
-# Different headings
-.green[.bold[Example]] 
-### Smaller heading
-* My section
-
-### Another samller heading
-.content-box-duke-green[ 
-
-  - You will get instructions with the tasks that need to be completed during the tutorial.
-  - Fan and Naveen will be there to guide and help you through the activities.
-  - Tutorials also provide a good opportunity for you to discuss and work with your peers.
-]
-
-
----
-
-class: left, middle
-# Using also LaTex
 
 .content-box-soft[ 
-- .green[.bold[Patricia]] $\leftarrow$ hello hello ]
+Deaths rates from HIV/AIDS in the world
+]
 
-- $\sum_{i = 1}^{\infty} x_i$
-
-**Bolding using markdown**
-
----
-class: centre, middle
-# Questions?
-
-
-
----
-class:  center, top
-
-# Let's get started with gifs
+```{r HIV_AIDS,  echo = FALSE, message = FALSE, warning = FALSE }
+HIV_AIDS <- Deaths %>% 
+  select( Entity, Code, Year, `Deaths - HIV/AIDS - Sex: Both - Age: All Ages (Number)`) %>%
+  rename(Deaths_HIV_AIDS = `Deaths - HIV/AIDS - Sex: Both - Age: All Ages (Number)` )%>%
+  filter(!is.na(Deaths_HIV_AIDS))
+                
+                 
+```
 
 
-![](https://media.giphy.com/media/3ohc1fpw7snh6omAaQ/giphy.gif)
-
-
-
-
+```{r World_trend, echo = FALSE, message = FALSE, warning = FALSE }
+HIV_AIDS %>% filter (Entity == "World")%>%
+  mutate(round_Deaths_HIV_AIDS = Deaths_HIV_AIDS/1000)%>%
+  ggplot(aes(x= Year, 
+             y = round_Deaths_HIV_AIDS))+
+  geom_line(linetype = "dashed", color = "blue", size =1 ) +
+  geom_point(color = "blue", size = 3)+
+  labs(y = "Number of Deaths from HIV/AIDS per 100,000 people",
+       x = "Year")+
+  ggtitle("Deaths rates from HIV/AIDS")+
+  theme_minimal()
+```
 
 ---
 class: left, top
 
-# Adding code
 
-```{r }
-c(1:10)
-
-```
-
-
----
-class: left, top
-# Adding code
-
-```{r }
-penguins %>%
-  dplyr::select(body_mass_g,
-                ends_with("_mm")
-                ) %>%
-  glimpse()
-```
-
-
-
-
----
-class:  left, top
-# Adding figure
-
-.pull-left1[
-```{r  penguins , eval = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins, 
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
+.content-box-soft[ 
+Top 5 countries with the highest average death rates from HIV / AIDS
 ]
 
-
-.pull-right1[
-```{r  penguins2 , eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins,
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
-]
-
-
-
----
-class:  left, top
-# Adding figure --> another way
-
-.right-column[
-```{r  penguins3 , eval = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins, 
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
-]
-
-
-.left-column[
-```{r  penguins4 , eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
-ggplot(data = penguins,
-       aes(x = flipper_length_mm,
-           y = body_mass_g)) +
-  geom_point(aes(color = species,
-                 shape = species),
-             size = 2) +
-  scale_color_manual(
-    values = c("darkorange",
-               "darkorchid",
-               "cyan4"))
-
-```
-]
-
-
----
-# Tables
-
-
-```{r}
-iris2 <- head(iris)
-knitr::kable(iris2,
+```{r average_HIV,   echo = FALSE, message = FALSE, warning = FALSE}
+#disable scientific notation
+options(scipen=999)
+#calculate average death rates per nation
+HIV_AIDS_nation <- HIV_AIDS %>% 
+  filter(!Entity %in% c("Asia", "Africa", "African Region", "Central Asia", "Central Europe", "Central Europe, Eastern Europe, and Central Asia",
+                        "Central Latin America", "Central sub-Saharan Africa", "Commonwealth High Income", "Commonwealth Low Income", 
+                        "Commonwealth Middle Income" , "East Asia","East Asia & Pacific - World Bank region", "Eastern Europe", 
+                        "Eastern Mediterranean Region", "Eastern sub-Saharan Africa" ,"Europe & Central Asia - World Bank region", 
+                        "European Region", "European Union" , "G20", "Low SDI", "High SDI", "Low-middle SDI",  "High-income", 
+                        "High-income Asia Pacific", "High-income North America" , "High-middle SDI","Latin America & Caribbean - World Bank region" ,
+                        "Middle SDI","Commonwealth", "African Union", "Southern sub-Saharan Africa", "Region of the Americas",
+                        "South-East Asia Region" , "Southeast Asia","Southeast Asia, East Asia, and Oceania", "South Asia - World Bank region",
+                        "Sub-Saharan Africa - World Bank region" , "Western Europe", "Western Pacific Region" , "Western sub-Saharan Africa", 
+                        "World" , "World Bank High Income", "World Bank Low Income","World Bank Lower Middle Income" ,
+                        "World Bank Upper Middle Income"))
+mean_HIV_AIDS <- HIV_AIDS_nation %>% 
+  group_by(Entity)  %>% 
+  summarise(`Average Death Rates from HIV/AIDS` =  mean(Deaths_HIV_AIDS, na.rm = TRUE)) %>%
+  arrange(-`Average Death Rates from HIV/AIDS`)
+mean_HIV_AIDS <- mean_HIV_AIDS %>% 
+  mutate_if(is.numeric, round, digits=0)
+mean_HIV_AIDS <- head(mean_HIV_AIDS,5)
+knitr::kable(mean_HIV_AIDS,
              col.names = gsub("[.]", " ",
-                              names(iris)))
-
-```
-
----
-class: center, middle
-
-```{r, echo=FALSE, message=FALSE}
-test <- read_csv("Data/test1.csv") 
-cardio <- test %>%
-  rename("cardio_num" = "Deaths - Cardiovascular diseases - Sex: Both - Age: All Ages (Number)") %>%
-  rename("country" = Entity)%>%
-  select(country,Year, cardio_num) %>%
-  filter(!country %in% c("G20", "World Bank Upper Middle Income",
-                         "East Asia & Pacific (WB)", "World Bank Lower Middle Income",
-                         "Western Pacific Region (WHO)", "European Region (WHO)",
-                         "Europe & Central Asia (WB)", "South-East Asia Region (WHO)",
-                         "OECD Countries", "World Bank High Income", "South Asia (WB)",
-                         "Region of the Americas (WHO)", "Eastern Mediterranean Region (WHO)",
-                         "Latin America & Caribbean (WB)", "African Region (WHO)",
-                         "Sub-Saharan Africa (WB)", "North America (WB)",
-                         "Middle East & North Africa (WB)", "World Bank Low Incom", "World Bank Low Income"))
-
-```
-
-```{r, echo=FALSE}
-cardio_world <- cardio %>%
-  filter(country == "World")
-
-graph_world <-  cardio_world %>%
-  group_by(country)%>%
-  ggplot() +
-  geom_line(aes(x = Year, y = cardio_num, color = country)) +
-  ylab("Number of death") + xlab("Year") + ggtitle("The top 5 countries by death of Cardiovascular diseases")
-graph_world
+                              names(mean_HIV_AIDS)))
 ```
 
 ---
 
-class: left, middle
-
-```{r, echo=FALSE}
-cardio_top5 <- cardio %>%
-  filter(country %in% c( "China", "India", "Russia", "United States", "Indonesia"))
+.content-box-soft[ 
+Death trend in those top 5 countries with the highest average death rates from HIV / AIDS
+]
 
 
-graph <-  cardio_top5 %>%
-  group_by(country)%>%
-  ggplot() +
-  geom_line(aes(x = Year, y = cardio_num, color = country)) +
-  ylab("Number of death") + xlab("Year") + ggtitle("The highest 5 countries by death of Cardiovascular diseases")
-
-graph
+```{r HIV_AIDS_nations, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Number of Deaths from HIV/AIDS in Countries"}
+HIV_AIDS %>% filter (Entity %in% c("South Africa", "Kenya","Tanzania", "India" , "Nigeria" ))%>%
+  mutate(round_Deaths_HIV_AIDS = Deaths_HIV_AIDS/1000)%>%
+  ggplot(aes(x= Year, 
+             y = round_Deaths_HIV_AIDS,
+             colour = Entity))+
+  geom_line(linetype = "dashed", size =1 ) +
+  geom_point(size = 2)+
+  labs(y = "Number of Deaths from HIV/AIDS per 100,000 people",
+       x = "Year")+
+  ggtitle("Deaths rates from HIV/AIDS")+
+  theme_minimal()
 ```
+
+
+
+---
+class: left, top
+
+.content-box-soft[ 
+Rate of HIV/AIDS-related deaths averted due to Antiretroviral Therapy (ART) introduced in the 1980s
+]
+
+
+
+```{r ART, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Effectiveness of Antiretroviral therapy on HIV / AIDS over the years"}
+ART <- read_csv("Data/hivaids-deaths-and-averted-due-to-art.csv")
+ART  %>% filter (Entity %in% c( "Africa", "South Africa", "Kenya","Tanzania", "India"  ))%>%
+  mutate(Deaths_averted = `Deaths averted due to ART - estimate`/1000)  %>%
+   ggplot(aes(x= Year, 
+             y = Deaths_averted, 
+             colour = Entity))+
+  geom_line(linetype = "dashed", size =1 ) +
+  geom_point( size = 2)+
+  labs(y = "Number of HIV/AIDS deaths averted per 100,000 people",
+       x = "Year")+
+  ggtitle("Number of HIV/AIDS deaths averted due to ART")+
+  theme_minimal()
+```
+
+
+
+---
+class: left, top
+.content-box-soft[ 
+Other measures on HIV prevention
+]
+
+- .blue[Contraception measures]
+
+- .blue[Education on HIV/AIDS]
+
 
 ---
 
 ```{r endslide, child="EndSlide/endslide.Rmd"}
 ```  
-
