@@ -1,7 +1,7 @@
 ---
 title: "Causes of Death "
 subtitle: "Presentation"
-author: "Min Min Soh"
+author: 
 institute: "Department of Econometrics and Business Statistics"
 output:
   xaringan::moon_reader:
@@ -19,6 +19,9 @@ options(htmltools.dir.version = FALSE)
 library(tidyverse)
 library(datasets)
 library(kableExtra)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
 ```
 
 
@@ -70,13 +73,14 @@ HIV_AIDS %>% filter (Entity == "World")%>%
   theme_minimal()
 ```
 
+
 ---
 class: left, top
-
 
 .content-box-soft[ 
 Top 5 countries with the highest average death rates from HIV / AIDS
 ]
+
 
 ```{r average_HIV,   echo = FALSE, message = FALSE, warning = FALSE}
 #disable scientific notation
@@ -110,6 +114,7 @@ knitr::kable(mean_HIV_AIDS,
 ```
 
 ---
+class: left, top
 
 .content-box-soft[ 
 Death trend in those top 5 countries with the highest average death rates from HIV / AIDS
@@ -131,9 +136,9 @@ HIV_AIDS %>% filter (Entity %in% c("South Africa", "Kenya","Tanzania", "India" ,
 ```
 
 
-
 ---
 class: left, top
+
 
 .content-box-soft[ 
 Rate of HIV/AIDS-related deaths averted due to Antiretroviral Therapy (ART) introduced in the 1980s
@@ -169,6 +174,143 @@ Other measures on HIV prevention
 
 - .blue[Education on HIV/AIDS]
 
+---
+class: left, top
+
+# Death - Malaria 
+
+-1. How is the trend of **malaria** change across the years in the WORLD ? 
+
+-2. What is the 5 countries with highest death rates for malaria
+
+-3. What is the preventive measures for malaria? 
+
+
+---
+class: left, top
+
+# Malaria world trend 
+
+```{r, echo = FALSE, preserve = TRUE}
+
+malaria_data <- read.csv("Data/annual-number-of-deaths-by-cause (1).csv")
+
+```
+
+.pullleft1[
+```{r, echo = FALSE, preserve = TRUE, fig.cap ="Malaria world trend"}
+
+malaria_data <- malaria_data %>%
+  select(Entity, Year, Deaths...Malaria...Sex..Both...Age..All.Ages..Number.) %>%
+  rename(Malaria = Deaths...Malaria...Sex..Both...Age..All.Ages..Number.) %>%
+  rename(Country = Entity) %>%
+  filter(Year >= 2000) 
+
+malaria_world<- malaria_data %>%
+  filter(Country == "World") 
+
+ggplot(malaria_world, aes( x = Year, y = Malaria)) +
+  geom_line()+
+  scale_y_continuous(labels = scales::comma)
+
+
+
+
+```
+]
+
+- The world trend of Malaria death rate was **decreasing** from 2000 to 2019
+
+
+---
+class: left, top
+
+# Top 5 Countries with **highest** Malaria death rate 
+
+
+.center2[
+```{r, echo = FALSE, preserve = TRUE}
+
+malaria_mean <- malaria_data %>%
+  group_by(Country) %>%
+  summarize(Mean = mean(Malaria)) %>%
+  mutate(Mean = ceiling(Mean)) %>%
+  arrange(-Mean) %>%
+  filter(Country != "World") %>%
+  filter(Country != "Sub-Saharan Africa (WB)") %>%
+  filter(Country != "African Region (WHO)") %>%
+  filter(Country != "World Bank Lower Middle Income") %>%
+  filter(Country != "World Bank Low Income") %>%
+  filter(Country != "Democratic Republic of Congo") %>%
+  filter(Country != "South-East Asia Region (WHO)") %>%
+  filter(Country != "South Asia (WB)") %>%
+  filter(Country != "G20") 
+
+knitr::kable(head(malaria_mean, 5))
+
+#knitr::kable(caption = "Top 5 Countries with highest Malaria death rate")
+
+
+```
+]
+
+---
+class: left, top
+
+# Trending of the top 5 Countries 
+
+.pullleft1[
+```{r, echo = FALSE, preserve = TRUE, fig.cap ="Malaria world trend", fig.pos= "H"}
+
+malaria_top5 <- malaria_data %>%
+  filter(Country %in% c("Nigeria", "India", "Uganda", "Burkina Faso", "Cote d'Ivoire")) 
+
+ggplot(malaria_top5, aes( x = Year, y = Malaria, color = Country)) +
+  geom_line()+
+  scale_y_continuous(labels = scales::comma)
+
+
+
+
+
+```
+]
+
+-The trend of malaria death rate from 2000 to 2019 was **decreasing** for the top 5 countries
+
+---
+class: left, top
+
+# Reasons for high death rate of malaria in these countries
+
+-hot and humid weather
+
+.content-box-soft[ 
+* Temperature higher or equal to 21℃ is the most suitable condition for one of the fatal malaria parasite to grow into vector. 
+]
+
+
+-lack of comprehensive report system
+
+.content-box-soft[ 
+* In India, hospital and clinic do not report malaria cases to corresponding government organisation
+]
+
+
+---
+class: left, top
+
+# Preventive measures for Malaria
+
+-Maldives: must report confirmed malaria cases to government
+
+-Sri Lanka: set up mobile malaria clinics to detect cases 
+
+-RTS.S subunit vaccine (still in testing stage)
+
+-use of insecticide
+
+-insecticide-treated net
 
 ---
 
