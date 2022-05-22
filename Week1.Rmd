@@ -36,9 +36,9 @@ Deaths <- read_csv("Data/annual-number-of-deaths-by-cause.csv")
 
 # Deaths - HIV/AIDS
 
-- .blue[How is the death rates of **HIV / AIDS** change in the world ? ]
-- .blue[What is the top 5 countries with the highest death rates from HIV / AIDS ? ]
-- .blue[What are the preventive measures for HIV / AIDS ? ]
+- .blue[How have death from **HIV / AIDS** changed over time in the world ? ]
+- .blue[What is the top 5 countries with the highest death rates from **HIV / AIDS** and the death trends from those countries? ]
+- .blue[What are the preventive measures for **HIV / AIDS** ? ]
 
 
 ---
@@ -77,7 +77,7 @@ class: left, top
 
 
 .content-box-soft[ 
-Top 5 countries with the average highest death rates from HIV / AIDS
+Top 5 countries with the highest average death rates from HIV / AIDS
 ]
 
 ```{r average_HIV,   echo = FALSE, message = FALSE, warning = FALSE}
@@ -86,7 +86,7 @@ options(scipen=999)
 
 #calculate average death rates per nation
 HIV_AIDS_nation <- HIV_AIDS %>% 
-  filter(!Entity %in% c("Asia", "African Region", "Central Asia", "Central Europe", "Central Europe, Eastern Europe, and Central Asia",
+  filter(!Entity %in% c("Asia", "Africa", "African Region", "Central Asia", "Central Europe", "Central Europe, Eastern Europe, and Central Asia",
                         "Central Latin America", "Central sub-Saharan Africa", "Commonwealth High Income", "Commonwealth Low Income", 
                         "Commonwealth Middle Income" , "East Asia","East Asia & Pacific - World Bank region", "Eastern Europe", 
                         "Eastern Mediterranean Region", "Eastern sub-Saharan Africa" ,"Europe & Central Asia - World Bank region", 
@@ -118,10 +118,37 @@ knitr::kable(mean_HIV_AIDS,
 ---
 
 .content-box-soft[ 
-Antiretroviral therapy (ART) introduced in 1980s
+Death trend in those top 5 countries with the highest average death rates from HIV / AIDS
 ]
 
-```{r ART, echo = FALSE, message = FALSE, warning = FALSE}
+
+```{r HIV_AIDS_nations, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Number of Deaths from HIV/AIDS in Countries"}
+HIV_AIDS %>% filter (Entity %in% c("South Africa", "Kenya","Tanzania", "India" , "Nigeria" ))%>%
+  mutate(round_Deaths_HIV_AIDS = Deaths_HIV_AIDS/1000)%>%
+  ggplot(aes(x= Year, 
+             y = round_Deaths_HIV_AIDS,
+             colour = Entity))+
+  geom_line(linetype = "dashed", size =1 ) +
+  geom_point(size = 2)+
+  labs(y = "Number of Deaths from HIV/AIDS per 100,000 people",
+       x = "Year")+
+  ggtitle("Deaths rates from HIV/AIDS")+
+  theme_minimal()
+
+```
+
+
+
+---
+class: left, top
+
+.content-box-soft[ 
+Rate of HIV/AIDS-related deaths averted due to Antiretroviral Therapy (ART) introduced in the 1980s
+]
+
+
+
+```{r ART, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Effectiveness of Antiretroviral therapy on HIV / AIDS over the years"}
 ART <- read_csv("Data/hivaids-deaths-and-averted-due-to-art.csv")
 
 ART  %>% filter (Entity %in% c( "Africa", "South Africa", "Kenya","Tanzania", "India"  ))%>%
@@ -139,6 +166,18 @@ ART  %>% filter (Entity %in% c( "Africa", "South Africa", "Kenya","Tanzania", "I
 
 
 ```
+
+
+
+---
+class: left, top
+.content-box-soft[ 
+Other measures on HIV prevention
+]
+
+- .blue[Contraception measures]
+
+- .blue[Education on HIV/AIDS]
 
 
 ---
