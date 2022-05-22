@@ -1,8 +1,7 @@
 ---
-title: "Causes of Death "
-subtitle: "Presentation"
-author: 
-institute: "Department of Econometrics and Business Statistics"
+title: "Xaringan Template"
+subtitle: "Cause of deaths"
+institute: "Master of Business Analytics"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -26,10 +25,31 @@ library(ggplot2)
 
 
 class: center, middle
+# ETC5513 Group 4
+.content-box-soft[ 
+- Min Min Soh
+- Yan Chui Lucia Cheung
+- Sanna Meer
+- Aphiaut Imuan
 
-# Introduction 
+]
+---
 
-Research Questions 
+# Introduction - Causes of Death
+
+## Areas discussed: 
+
+- HIV/AIDS
+- Malaria
+- Nutritional deficiencies
+- Cardiovascular diseases
+---
+
+## Research Questions: 
+
+- How have death from the chosen area changed over time in the world? 
+- What are the top 5 countries with the highest death rates from the chosen area and the death trends from those countries? 
+- What are the preventative measures for the chosen area? 
 
 ```{r read_csv, echo = FALSE, message = FALSE, warning = FALSE}
 Deaths <- read_csv("Data/annual-number-of-deaths-by-cause.csv")
@@ -40,7 +60,7 @@ Deaths <- read_csv("Data/annual-number-of-deaths-by-cause.csv")
 # Deaths - HIV/AIDS
 
 - .blue[How have death from **HIV / AIDS** changed over time in the world ? ]
-- .blue[What is the top 5 countries with the highest death rates from **HIV / AIDS** and the death trends from those countries? ]
+- .blue[What are the top 5 countries with the highest death rates from **HIV / AIDS** and the death trends for those countries? ]
 - .blue[What are the preventive measures for **HIV / AIDS** ? ]
 
 
@@ -121,6 +141,7 @@ Death trend in those top 5 countries with the highest average death rates from H
 ]
 
 
+
 ```{r HIV_AIDS_nations, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Number of Deaths from HIV/AIDS in Countries"}
 HIV_AIDS %>% filter (Entity %in% c("South Africa", "Kenya","Tanzania", "India" , "Nigeria" ))%>%
   mutate(round_Deaths_HIV_AIDS = Deaths_HIV_AIDS/1000)%>%
@@ -136,14 +157,12 @@ HIV_AIDS %>% filter (Entity %in% c("South Africa", "Kenya","Tanzania", "India" ,
 ```
 
 
+
 ---
 class: left, top
-
-
 .content-box-soft[ 
-Rate of HIV/AIDS-related deaths averted due to Antiretroviral Therapy (ART) introduced in the 1980s
+Preventative Measures- Antiretroviral Therapy (ART) introduced in the 1980s
 ]
-
 
 
 ```{r ART, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Effectiveness of Antiretroviral therapy on HIV / AIDS over the years"}
@@ -162,8 +181,6 @@ ART  %>% filter (Entity %in% c( "Nigeria", "South Africa", "Kenya","Tanzania", "
   theme_minimal()
 ```
 
-
-
 ---
 class: left, top
 .content-box-soft[ 
@@ -179,12 +196,9 @@ class: left, top
 
 # Death - Malaria 
 
--1. How is the trend of **malaria** change across the years in the WORLD ? 
-
--2. What is the 5 countries with highest death rates for malaria
-
--3. What is the preventive measures for malaria? 
-
+- .blue[How have death from **Malaria** changed over time in the world ? ]
+- .blue[What are the top 5 countries with the highest death rates from **Malaria** and the death trends for those countries? ]
+- .blue[What are the preventive measures for **Malaria** ? ]
 
 ---
 class: left, top
@@ -193,7 +207,7 @@ class: left, top
 
 ```{r, echo = FALSE, preserve = TRUE}
 
-malaria_data <- read.csv("Data/annual-number-of-deaths-by-cause (1).csv")
+malaria_data <- read.csv("Data/annual-number-of-deaths-by-cause.csv")
 
 ```
 
@@ -219,8 +233,6 @@ ggplot(malaria_world, aes( x = Year, y = Malaria)) +
 ```
 ]
 
-- The world trend of Malaria death rate was **decreasing** from 2000 to 2019
-
 
 ---
 class: left, top
@@ -236,15 +248,17 @@ malaria_mean <- malaria_data %>%
   summarize(Mean = mean(Malaria)) %>%
   mutate(Mean = ceiling(Mean)) %>%
   arrange(-Mean) %>%
-  filter(Country != "World") %>%
-  filter(Country != "Sub-Saharan Africa (WB)") %>%
-  filter(Country != "African Region (WHO)") %>%
-  filter(Country != "World Bank Lower Middle Income") %>%
-  filter(Country != "World Bank Low Income") %>%
-  filter(Country != "Democratic Republic of Congo") %>%
-  filter(Country != "South-East Asia Region (WHO)") %>%
-  filter(Country != "South Asia (WB)") %>%
-  filter(Country != "G20") 
+   filter(!Country %in% c("Asia", "Africa", "African Region", "Central Asia", "Central Europe", "Central Europe, Eastern Europe, and Central Asia",
+                        "Central Latin America", "Central sub-Saharan Africa", "Commonwealth High Income", "Commonwealth Low Income", 
+                        "Commonwealth Middle Income" , "East Asia","East Asia & Pacific - World Bank region", "Eastern Europe", 
+                        "Eastern Mediterranean Region", "Eastern sub-Saharan Africa" ,"Europe & Central Asia - World Bank region", 
+                        "European Region", "European Union" , "G20", "Low SDI", "High SDI", "Low-middle SDI",  "High-income", 
+                        "High-income Asia Pacific", "High-income North America" , "High-middle SDI","Latin America & Caribbean - World Bank region" ,
+                        "Middle SDI","Commonwealth", "African Union", "Southern sub-Saharan Africa", "Region of the Americas",
+                        "South-East Asia Region" , "Southeast Asia","Southeast Asia, East Asia, and Oceania", "South Asia - World Bank region",
+                        "Sub-Saharan Africa - World Bank region" , "Western Europe", "Western Pacific Region" , "Western sub-Saharan Africa", 
+                        "World" , "World Bank High Income", "World Bank Low Income","World Bank Lower Middle Income" ,
+                        "World Bank Upper Middle Income"))
 
 knitr::kable(head(malaria_mean, 5))
 
@@ -257,13 +271,16 @@ knitr::kable(head(malaria_mean, 5))
 ---
 class: left, top
 
-# Trending of the top 5 Countries 
+.content-box-soft[ 
+Trending of the top 5 Countries
+]
+ 
 
 .pullleft1[
 ```{r, echo = FALSE, preserve = TRUE, fig.cap ="Malaria world trend", fig.pos= "H"}
 
 malaria_top5 <- malaria_data %>%
-  filter(Country %in% c("Nigeria", "India", "Uganda", "Burkina Faso", "Cote d'Ivoire")) 
+  filter(Country %in% c("Nigeria", "India", "Uganda", "Burkina Faso", "Democratic Republic of Congo")) 
 
 ggplot(malaria_top5, aes( x = Year, y = Malaria, color = Country)) +
   geom_line()+
@@ -276,7 +293,6 @@ ggplot(malaria_top5, aes( x = Year, y = Malaria, color = Country)) +
 ```
 ]
 
--The trend of malaria death rate from 2000 to 2019 was **decreasing** for the top 5 countries
 
 ---
 class: left, top
@@ -312,7 +328,141 @@ class: left, top
 
 -insecticide-treated net
 
+
 ---
+
+class: left, top
+
+# Death - Nutritional Deficiencies 
+
+- .blue[How have death from **Nutritional Deficiencies** changed over time in the world ? ]
+- .blue[What are the top 5 countries with the highest death rates from **Nutritional Deficiencies** and the death trends for those countries? ]
+- .blue[What are the preventive measures for **Nutritional Deficiencies** ? ]
+
+---
+
+
+```{r, echo=FALSE, message=FALSE}
+#reading the data
+data <- read_csv(here::here("Data/test1.csv"))
+data1 <- data %>%
+  rename(Nutritional_deficiency_deaths = "Deaths - Nutritional deficiencies - Sex: Both - Age: All Ages (Number)",
+         Country = "Entity")
+
+#removing unwanted observations
+ data2<- data1 %>% 
+   select(Country,Year, Nutritional_deficiency_deaths) %>%
+  filter(!Country %in% c("Asia", "Africa", "African Region", "Central Asia", "South-East Asia Region (WHO)", "East Asia & Pacific (WB)", "Region of the Americas (WHO)", "South Asia (WB)",	"African Region (WHO)", "Latin America & Caribbean (WB)", "Eastern Mediterranean Region (WHO)", "Western Pacific Region (WHO)", "OECD Countries", "Sub-Saharan Africa (WB)" ,"Central Europe", "Central Europe, Eastern Europe, and Central Asia",
+                        "Central Latin America", "Central sub-Saharan Africa", "Commonwealth High Income", "Commonwealth Low Income", 
+                        "Commonwealth Middle Income" , "East Asia","East Asia & Pacific - World Bank region", "Eastern Europe", 
+                        "Eastern Mediterranean Region", "Eastern sub-Saharan Africa" ,"Europe & Central Asia - World Bank region", 
+                        "European Region", "European Union" , "G20", "Low SDI", "High SDI", "Low-middle SDI",  "High-income", 
+                        "High-income Asia Pacific", "High-income North America" , "High-middle SDI","Latin America & Caribbean - World Bank region" ,
+                        "Middle SDI","Commonwealth", "African Union", "Southern sub-Saharan Africa", "Region of the Americas",
+                        "South-East Asia Region" , "Southeast Asia","Southeast Asia, East Asia, and Oceania", "South Asia - World Bank region",
+                        "Sub-Saharan Africa - World Bank region" , "Western Europe", "Western Pacific Region" , "Western sub-Saharan Africa", 
+                        "World" , "World Bank High Income", "World Bank Low Income","World Bank Lower Middle Income" ,
+                        "World Bank Upper Middle Income"))
+ 
+```
+
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+
+ Nutr_def_data <- data2 %>%
+  select(Country, Year, Nutritional_deficiency_deaths) %>%
+  group_by(Country, Year) %>%
+  summarise(Total_deaths = sum(Nutritional_deficiency_deaths, na.rm= TRUE))
+```
+
+# Worldwide trend
+
+
+```{r, echo = FALSE, message = FALSE}
+data1 %>% filter (Country == "World")%>%
+  ggplot(aes(x= Year, 
+             y = Nutritional_deficiency_deaths))+
+   geom_line(color = "blue") +
+  ylab("Total_deaths") + xlab("Year") + ggtitle("The trend of Nutritional Deficiency deaths worldwide from 1990") + scale_y_continuous(labels = scales::comma)
+
+
+```
+
+---
+
+#Top 5 countries with highest average  death rates
+
+
+```{r top5, echo = FALSE, message = FALSE}
+#top  countries with highest average  death rates
+
+Highest_countries1 <- data2 %>%
+         group_by(Country) %>%
+          summarise(mean = mean(Nutritional_deficiency_deaths, na.rm = TRUE)) %>%
+  arrange(-mean)
+
+```
+
+
+```{r top5countries, echo = FALSE, message = FALSE}
+Highest_countries <- Highest_countries1 %>% 
+  mutate_if(is.numeric, round, digits=0)
+
+knitr::kable(
+Highest_countries[1:5,], booktabs = TRUE,
+             caption = 'Total deaths by Nutritional Deficiencies')
+```
+
+
+---
+
+class: center, middle
+
+```{r, echo=FALSE}
+deaths_top5 <- data1 %>%
+  filter(Country %in% c( "India", "Ethiopia", "Bangladesh", "North Korea", "Indonesia"))
+```
+
+
+# Top 5 countries
+
+
+```{r, echo = FALSE}
+plot <-  deaths_top5 %>%
+  group_by(Country) %>%
+  ggplot() +
+  geom_line(aes(x = Year, y = Nutritional_deficiency_deaths, color = Country)) +
+  ylab("Number of death") + xlab("Year") + ggtitle("Top 5 countries with highest average death rates due to Nutritional Deficiencies")
+
+plot
+```
+
+
+---
+class: center, middle
+
+# Reasons and Preventive Measures
+---
+
+## .red[.bold[Reasons]]
+
+* Several contributory factors such as .red[.bold[Poverty, lack of purchasing power, household food insecurity, and limited general knowledge]] about appropriate nutritional practices increase the risk of undernutrition in developing countries. 
+* .red[.bold[The synergistic interaction between inadequate dietary intake and disease burden]] leads to a vicious cycle that accounts for much of the high morbidity and mortality in these countries.
+* Three groups of underlying factors contribute to inadequate dietary intake and infectious disease: .red[.bold[inadequate maternal and child care, household food insecurity, and poor health services]] in an unhealthy environment.
+
+---
+
+## .green[.bold[Preventive Measures]]
+
+
+Primary prevention measures taken to ensure more appropriate nutrient intakes in the population often include :
+* .green[.bold[Education programs]] to encourage healthier and more nutritious food choices
+* .green[.bold[Food-based approaches]] that increase the availability or affordability of nutrient-rich foods; and,
+* .green[.bold[National policies]] to fortify commonly-eaten foods
+
+
+---
+
 
 ```{r endslide, child="EndSlide/endslide.Rmd"}
 ```  
