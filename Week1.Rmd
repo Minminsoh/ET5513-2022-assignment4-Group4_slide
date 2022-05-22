@@ -294,6 +294,31 @@ knitr::kable(iris2,
 ---
 class: center, middle
 
+.content-box-duke-green[ 
+**Death of Cardiovascular diseases**
+]
+
+.pull-left[
+```{r out.width = '80%', echo = FALSE}
+knitr::include_graphics("figs/UDMI_Cardiovascular-Disease.png")
+```
+
+]
+
+
+.pull-right[
+```{r out.width = '80%', echo = FALSE}
+knitr::include_graphics("figs/Coronary-disease-illustration.jpeg")
+```
+
+]
+---
+
+class: center, middle
+.content-box-soft[ 
+**Number of Deaths - Cardiovascular diseases (World)**
+]
+
 ```{r, echo=FALSE, message=FALSE}
 test <- read_csv("Data/test1.csv") 
 cardio <- test %>%
@@ -312,7 +337,7 @@ cardio <- test %>%
 
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, out.width = '70%', dpi=300}
 cardio_world <- cardio %>%
   filter(country == "World")
 
@@ -326,9 +351,12 @@ graph_world
 
 ---
 
-class: left, middle
+class: center, middle
+.content-box-soft[ 
+**Number of Deaths - Cardiovascular diseases (TOP 5)**
+]
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, out.width = '70%', dpi=300}
 cardio_top5 <- cardio %>%
   filter(country %in% c( "China", "India", "Russia", "United States", "Indonesia"))
 
@@ -343,7 +371,51 @@ graph
 ```
 
 ---
+class: center, top
 
+# Healthy lifestyle factors
+
+
+
+.pull-left[
+.red[Smoking]
+ 
+ .tiny[<span>Photo by <a href="https://unsplash.com/photos/KThe9Aw7IFkt">Haim Charbit</a> on <a href="https://unsplash.com/photos/KThe9Aw7IFk">Unsplash</a></span>]
+
+]
+.pull-left[
+```{r out.width = '50%', echo = FALSE}
+knitr::include_graphics("figs/haim-charbit-KThe9Aw7IFk-unsplash.jpg")
+```
+
+]
+
+.pull-left[
+.green[Excercise] 
+
+.tiny[<span>Photo by <a href="https://unsplash.com/photos/a6FHROHuQ9o">Alex McCarthy</a> on <a href="https://unsplash.com/photos/a6FHROHuQ9o">Unsplash</a></span>]
+
+]
+.pull-left[
+```{r out.width = '50%', echo = FALSE}
+knitr::include_graphics("figs/alex-mccarthy-a6FHROHuQ9o-unsplash.jpg")
+```
+
+]
+
+.pull-left[
+.green[Healthy Foods]
+ 
+ .tiny[<span>Photo by <a href="https://unsplash.com/photos/4_jhDO54BYg">Dan Gold</a> on <a href="https://unsplash.com/photos/4_jhDO54BYg">Unsplash</a></span>]
+]
+.pull-left[
+```{r out.width = '50%', echo = FALSE}
+knitr::include_graphics("figs/dan-gold-4_jhDO54BYg-unsplash.jpg")
+```
+
+]
+
+---
 ```{r endslide, child="EndSlide/endslide.Rmd"}
 ```  
 
