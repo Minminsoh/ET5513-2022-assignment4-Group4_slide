@@ -1,0 +1,87 @@
+---
+title: "Untitled"
+output: html_document
+date: '2022-05-20'
+---
+```{r}
+library(tidyverse)
+library(naniar)
+library(kableExtra)
+```
+
+```{r}
+test <- read_csv("Data/test1.csv") 
+
+  
+```
+
+```{r}
+test %>% summarise_if(is.numeric, max) %>%
+  kable()
+```
+
+```{r}
+cardio <- test %>%
+  rename("cardio_num" = "Deaths - Cardiovascular diseases - Sex: Both - Age: All Ages (Number)") %>%
+  rename("country" = Entity)%>%
+  select(country,Year, cardio_num) %>%
+  filter(!country %in% c("G20", "World Bank Upper Middle Income",
+                         "East Asia & Pacific (WB)", "World Bank Lower Middle Income",
+                         "Western Pacific Region (WHO)", "European Region (WHO)",
+                         "Europe & Central Asia (WB)", "South-East Asia Region (WHO)",
+                         "OECD Countries", "World Bank High Income", "South Asia (WB)",
+                         "Region of the Americas (WHO)", "Eastern Mediterranean Region (WHO)",
+                         "Latin America & Caribbean (WB)", "African Region (WHO)",
+                         "Sub-Saharan Africa (WB)", "North America (WB)",
+                         "Middle East & North Africa (WB)", "World Bank Low Incom", "World Bank Low Income"))
+
+sum_cardio_max <- cardio %>% group_by(country) %>%
+  summarise(maximum = max(cardio_num),
+            minimum = min(cardio_num)) %>%
+  arrange(desc(maximum)) %>%
+  head(,6)
+
+sum_cardio_min <- cardio %>% group_by(country) %>%
+  summarise(maximum = max(cardio_num),
+            minimum = min(cardio_num)) %>%
+  arrange(minimum) %>%
+  head(,6)
+
+sum_cardio_max 
+
+cardio_world <- cardio %>%
+  filter(country == "World")
+
+graph_world <-  cardio_world %>%
+  group_by(country)%>%
+  ggplot() +
+  geom_line(aes(x = Year, y = cardio_num, color = country)) +
+  ylab("Number of death") + xlab("Year") + ggtitle("The top 5 countries by death of Cardiovascular diseases")
+graph_world
+
+cardio_top5 <- cardio %>%
+  filter(country %in% c( "China", "India", "Russia", "United States", "Indonesia"))
+
+
+graph <-  cardio_top5 %>%
+  group_by(country)%>%
+  ggplot() +
+  geom_line(aes(x = Year, y = cardio_num, color = country)) +
+  ylab("Number of death") + xlab("Year") + ggtitle("The highest 5 countries by death of Cardiovascular diseases")
+
+graph
+
+cardio_low5 <- cardio %>%
+  filter(country %in% c( "Tokelau", "Niue", "Nauru", "Tuvalu", "Palau"))
+
+graph_min_5 <-  cardio_low5 %>%
+  group_by(country)%>%
+  ggplot() +
+  geom_line(aes(x = Year, y = cardio_num, color = country)) +
+  ylab("Number of death") + xlab("Year") + ggtitle("The lowest 5 countries by death of Cardiovascular diseases")
+graph_min_5
+
+```
+
+
+
