@@ -292,15 +292,37 @@ knitr::kable(iris2,
 ```
 
 ---
+
+
+# Research questions :
+
+.content-box-duke-green[ 
+
+  In this section, I wanted to understand the trend of Nutritional Deficiency deaths worldwide from 1990. The World Health Organisation estimates that more than two billion people suffer from Nutritional Deficiency globally.   
+  So with this data set, I am trying to answer three of the following research questions:
+  
+-1. How is the trend of  Nutritional Deficiency deaths worldwide from 1990?  
+
+-2.  countries in the world with the highest deaths caused by Nutritional Deficiencies.  
+
+-3. What are the preventive measures those countries can take to reduce these deaths? 
+]
+
+---
+
 class: center, middle
 
 ```{r, echo=FALSE, message=FALSE}
-test <- read_csv("Data/test1.csv") 
-cardio <- test %>%
-  rename("cardio_num" = "Deaths - Cardiovascular diseases - Sex: Both - Age: All Ages (Number)") %>%
-  rename("country" = Entity)%>%
-  select(country,Year, cardio_num) %>%
-  filter(!country %in% c("G20", "World Bank Upper Middle Income",
+#reading the data
+data <- read_csv(here::here("Data/test1.csv"))
+data1 <- data %>%
+  rename(Nutritional_deficiency_deaths = "Deaths - Nutritional deficiencies - Sex: Both - Age: All Ages (Number)",
+         Country = "Entity")
+
+#removing unwanted observations
+ data2<- data1 %>% 
+   select(Country,Year, Nutritional_deficiency_deaths) %>%
+  filter(!Country %in% c("G20", "World Bank Upper Middle Income",
                          "East Asia & Pacific (WB)", "World Bank Lower Middle Income",
                          "Western Pacific Region (WHO)", "European Region (WHO)",
                          "Europe & Central Asia (WB)", "South-East Asia Region (WHO)",
@@ -308,38 +330,66 @@ cardio <- test %>%
                          "Region of the Americas (WHO)", "Eastern Mediterranean Region (WHO)",
                          "Latin America & Caribbean (WB)", "African Region (WHO)",
                          "Sub-Saharan Africa (WB)", "North America (WB)",
-                         "Middle East & North Africa (WB)", "World Bank Low Incom", "World Bank Low Income"))
+                         "Middle East & North Africa (WB)", "World Bank Low Income", "World Bank Low Income"))
+ 
 
 ```
 
-```{r, echo=FALSE}
-cardio_world <- cardio %>%
-  filter(country == "World")
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
 
-graph_world <-  cardio_world %>%
-  group_by(country)%>%
-  ggplot() +
-  geom_line(aes(x = Year, y = cardio_num, color = country)) +
-  ylab("Number of death") + xlab("Year") + ggtitle("The top 5 countries by death of Cardiovascular diseases")
-graph_world
+ Nutr_def_data <- data1 %>%
+  select(Country, Year, Nutritional_deficiency_deaths) %>%
+  group_by(Country, Year) %>%
+  summarise(Total_deaths = sum(Nutritional_deficiency_deaths, na.rm= TRUE))
+
+```
+
+
+# Worldwide trend
+
+```{r, echo = FALSE, message = FALSE}
+#getting the worldwide death count
+World_data <- Nutr_def_data %>%
+  filter(Country=="World")
+
+ggplot(data = World_data, aes(Year, Total_deaths, colour="World")) +
+                     geom_line() +
+  ylab("Total_deaths") + xlab("Year") + ggtitle("The trend of Nutritional Deficiency deaths worldwide from 1990")
+```
+
+
+```{r, echo = FALSE, message = FALSE}
+#top 5 countries with highest death rates
+
+Tidy_data <- Nutr_def_data %>%
+         group_by(Country) %>%
+          summarise(mean = mean(Total_deaths, na.rm = TRUE)) %>%
+  arrange(-mean)
+
+#removing unwanted observations
+Top5 <- Tidy_data[-c(2:8), ]
+Highest_countries <- Top5[-c(3:8), ]
+
 ```
 
 ---
 
-class: left, middle
+class: center, middle
 
 ```{r, echo=FALSE}
-cardio_top5 <- cardio %>%
-  filter(country %in% c( "China", "India", "Russia", "United States", "Indonesia"))
+deaths_top5 <- data1 %>%
+  filter(Country %in% c( "India", "Ethiopia", "Bangladesh", "North Korea", "Indonesia"))
+```
 
+# Top 5 countries
 
-graph <-  cardio_top5 %>%
-  group_by(country)%>%
+```{r, echo = FALSE}
+plot <-  deaths_top5 %>%
+  group_by(Country) %>%
   ggplot() +
-  geom_line(aes(x = Year, y = cardio_num, color = country)) +
-  ylab("Number of death") + xlab("Year") + ggtitle("The highest 5 countries by death of Cardiovascular diseases")
-
-graph
+  geom_line(aes(x = Year, y = Nutritional_deficiency_deaths, color = Country)) +
+  ylab("Number of death") + xlab("Year") + ggtitle("Top 5 countries with highest death rates due to Nutritional Deficiencies")
+plot
 ```
 
 ---
