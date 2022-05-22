@@ -1,7 +1,7 @@
 ---
-title: "Xaringan Template"
-subtitle: "Cause of deaths"
-institute: "Master of Business Analytics"
+title: "Cause of deaths"
+subtitle: "Master of Business Analytics"
+institute: 
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -27,10 +27,10 @@ library(ggplot2)
 class: center, middle
 # ETC5513 Group 4
 .content-box-soft[ 
-- Min Min Soh
-- Yan Chui Lucia Cheung
-- Sanna Meer
-- Aphiaut Imuan
+ Min Min Soh  
+ Yan Chui Lucia Cheung  
+ Sanna Meer  
+ Aphiaut Imuan
 
 ]
 ---
@@ -80,7 +80,7 @@ HIV_AIDS <- Deaths %>%
 ```
 
 
-```{r World_trend, echo = FALSE, message = FALSE, warning = FALSE }
+```{r World_trend, echo = FALSE, message = FALSE, warning = FALSE , dpi=300, out.width = '70%'}
 HIV_AIDS %>% filter (Entity == "World")%>%
   mutate(round_Deaths_HIV_AIDS = Deaths_HIV_AIDS/1000)%>%
   ggplot(aes(x= Year, 
@@ -142,7 +142,7 @@ Death trend in those top 5 countries with the highest average death rates from H
 
 
 
-```{r HIV_AIDS_nations, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Number of Deaths from HIV/AIDS in Countries"}
+```{r HIV_AIDS_nations, echo = FALSE, message = FALSE, warning = FALSE, dpi=300, out.width = '70%'}
 HIV_AIDS %>% filter (Entity %in% c("South Africa", "Kenya","Tanzania", "India" , "Nigeria" ))%>%
   mutate(round_Deaths_HIV_AIDS = Deaths_HIV_AIDS/1000)%>%
   ggplot(aes(x= Year, 
@@ -165,7 +165,7 @@ Preventative Measures- Antiretroviral Therapy (ART) introduced in the 1980s
 ]
 
 
-```{r ART, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Effectiveness of Antiretroviral therapy on HIV / AIDS over the years"}
+```{r ART, echo = FALSE, message = FALSE, warning = FALSE, dpi=300, out.width = '70%'}
 ART <- read_csv("Data/hivaids-deaths-and-averted-due-to-art.csv")
 
 ART  %>% filter (Entity %in% c( "Nigeria", "South Africa", "Kenya","Tanzania", "India"  ))%>%
@@ -212,7 +212,7 @@ malaria_data <- read.csv("Data/annual-number-of-deaths-by-cause.csv")
 ```
 
 .pullleft1[
-```{r, echo = FALSE, preserve = TRUE, fig.cap ="Malaria world trend"}
+```{r, echo = FALSE, preserve = TRUE, dpi=300, out.width = '70%'}
 
 malaria_data <- malaria_data %>%
   select(Entity, Year, Deaths...Malaria...Sex..Both...Age..All.Ages..Number.) %>%
@@ -225,7 +225,7 @@ malaria_world<- malaria_data %>%
 
 ggplot(malaria_world, aes( x = Year, y = Malaria)) +
   geom_line()+
-  scale_y_continuous(labels = scales::comma)
+  scale_y_continuous(labels = scales::comma) + ggtitle("Malaria world trend")
 
 
 
@@ -277,14 +277,15 @@ Trending of the top 5 Countries
  
 
 .pullleft1[
-```{r, echo = FALSE, preserve = TRUE, fig.cap ="Malaria world trend", fig.pos= "H"}
+```{r, echo = FALSE, preserve = TRUE, fig.pos= "H", dpi=300, out.width = '70%'}
 
 malaria_top5 <- malaria_data %>%
   filter(Country %in% c("Nigeria", "India", "Uganda", "Burkina Faso", "Democratic Republic of Congo")) 
 
 ggplot(malaria_top5, aes( x = Year, y = Malaria, color = Country)) +
   geom_line()+
-  scale_y_continuous(labels = scales::comma)
+  scale_y_continuous(labels = scales::comma) + 
+  ggtitle("Top 5 countries with the highest malaria death rate")
 
 
 
@@ -378,7 +379,7 @@ data1 <- data %>%
 # Worldwide trend
 
 
-```{r, echo = FALSE, message = FALSE}
+```{r, echo = FALSE, message = FALSE, dpi=300, out.width = '70%'}
 data1 %>% filter (Country == "World")%>%
   ggplot(aes(x= Year, 
              y = Nutritional_deficiency_deaths))+
@@ -408,9 +409,9 @@ Highest_countries1 <- data2 %>%
 Highest_countries <- Highest_countries1 %>% 
   mutate_if(is.numeric, round, digits=0)
 
-knitr::kable(
-Highest_countries[1:5,], booktabs = TRUE,
-             caption = 'Total deaths by Nutritional Deficiencies')
+knitr::kable(head(
+Highest_countries,5), booktabs = TRUE)
+
 ```
 
 
@@ -427,12 +428,12 @@ deaths_top5 <- data1 %>%
 # Top 5 countries
 
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, dpi=300, out.width = '70%'}
 plot <-  deaths_top5 %>%
   group_by(Country) %>%
   ggplot() +
   geom_line(aes(x = Year, y = Nutritional_deficiency_deaths, color = Country)) +
-  ylab("Number of death") + xlab("Year") + ggtitle("Top 5 countries with highest average death rates due to Nutritional Deficiencies")
+  ylab("Number of death") + xlab("Year") + ggtitle("Top 5 countries with highest death rates due to Nutritional Deficiencies")
 
 plot
 ```
@@ -463,6 +464,149 @@ Primary prevention measures taken to ensure more appropriate nutrient intakes in
 
 ---
 
+class: center, middle
 
-```{r endslide, child="EndSlide/endslide.Rmd"}
-```  
+.content-box-duke-green[ 
+**Death of Cardiovascular diseases**
+]
+
+.pull-left[
+```{r out.width = '80%', echo = FALSE}
+knitr::include_graphics("figs/UDMI_Cardiovascular-Disease.png")
+```
+
+]
+
+
+.pull-right[
+```{r out.width = '80%', echo = FALSE}
+knitr::include_graphics("figs/Coronary-disease-illustration.jpeg")
+```
+
+]
+
+---
+
+class: center, top
+.content-box-duke-green[ 
+ **Death - Cardiovascular diseases** 
+]
+
+- How are the trend of **Cardiovascular diseases** change across the years in the WORLD ? 
+
+- What are the 5 countries with highest death of Cardiovascular diseases ?
+
+- What are the healthy lifestyle factors measures for Cardiovascular diseases ? 
+
+---
+
+class: center, middle
+.content-box-soft[ 
+**Number of Deaths - Cardiovascular diseases (World)**
+]
+
+```{r, echo=FALSE, message=FALSE}
+test <- read_csv("Data/test1.csv") 
+cardio <- test %>%
+  rename("cardio_num" = "Deaths - Cardiovascular diseases - Sex: Both - Age: All Ages (Number)") %>%
+  rename("country" = Entity)%>%
+  select(country,Year, cardio_num) %>%
+  filter(!country %in% c("G20", "World Bank Upper Middle Income",
+                         "East Asia & Pacific (WB)", "World Bank Lower Middle Income",
+                         "Western Pacific Region (WHO)", "European Region (WHO)",
+                         "Europe & Central Asia (WB)", "South-East Asia Region (WHO)",
+                         "OECD Countries", "World Bank High Income", "South Asia (WB)",
+                         "Region of the Americas (WHO)", "Eastern Mediterranean Region (WHO)",
+                         "Latin America & Caribbean (WB)", "African Region (WHO)",
+                         "Sub-Saharan Africa (WB)", "North America (WB)",
+                         "Middle East & North Africa (WB)", "World Bank Low Incom", "World Bank Low Income"))
+
+```
+
+```{r, echo=FALSE, out.width = '70%', dpi=300}
+cardio_world <- cardio %>%
+  filter(country == "World")
+
+graph_world <-  cardio_world %>%
+  group_by(country)%>%
+  ggplot() +
+  geom_line(aes(x = Year, y = cardio_num, color = country)) +
+  ylab("Number of death") + xlab("Year") + ggtitle("Cardiovascular diseases world trend")+ scale_y_continuous(labels = scales::comma)
+
+graph_world
+```
+
+---
+
+class: center, middle
+.content-box-soft[ 
+**Number of Deaths - Cardiovascular diseases (TOP 5)**
+]
+
+```{r, echo=FALSE, out.width = '70%', dpi=300}
+cardio_top5 <- cardio %>%
+  filter(country %in% c( "China", "India", "Russia", "United States", "Indonesia"))
+
+
+graph <-  cardio_top5 %>%
+  group_by(country)%>%
+  ggplot() +
+  geom_line(aes(x = Year, y = cardio_num, color = country)) +
+  ylab("Number of death") + xlab("Year") + ggtitle("The 5 highest countries by death of Cardiovascular diseases") +scale_y_continuous(labels = scales::comma)
+
+
+graph
+```
+
+---
+class: center, top
+
+# Healthy lifestyle factors
+
+
+
+.pull-left[
+.red[Smoking]
+ 
+ .tiny[<span>Photo by <a href="https://unsplash.com/photos/KThe9Aw7IFkt">Haim Charbit</a> on <a href="https://unsplash.com/photos/KThe9Aw7IFk">Unsplash</a></span>]
+
+]
+.pull-left[
+```{r out.width = '50%', echo = FALSE}
+knitr::include_graphics("figs/haim-charbit-KThe9Aw7IFk-unsplash.jpg")
+```
+
+]
+
+.pull-left[
+.green[Excercise] 
+
+.tiny[<span>Photo by <a href="https://unsplash.com/photos/a6FHROHuQ9o">Alex McCarthy</a> on <a href="https://unsplash.com/photos/a6FHROHuQ9o">Unsplash</a></span>]
+
+]
+.pull-left[
+```{r out.width = '50%', echo = FALSE}
+knitr::include_graphics("figs/alex-mccarthy-a6FHROHuQ9o-unsplash.jpg")
+```
+
+]
+
+.pull-left[
+.green[Healthy Foods]
+ 
+ .tiny[<span>Photo by <a href="https://unsplash.com/photos/4_jhDO54BYg">Dan Gold</a> on <a href="https://unsplash.com/photos/4_jhDO54BYg">Unsplash</a></span>]
+]
+.pull-left[
+```{r out.width = '50%', echo = FALSE}
+knitr::include_graphics("figs/dan-gold-4_jhDO54BYg-unsplash.jpg")
+```
+
+]
+
+---
+class: center, middle
+
+```{r , echo = FALSE}
+knitr::include_graphics("figs/thank-you-in-greek.jpg")
+``` 
+
